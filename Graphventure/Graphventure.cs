@@ -42,6 +42,7 @@ namespace Graphventure {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
             map = Map.Parse("maps/demo.txt");
+            map.LoadContent(Content);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Graphventure {
 
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred);
-            map.DrawMap(spriteBatch, Content, gameTime);
+            map.DrawMap(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);
