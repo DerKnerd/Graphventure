@@ -44,6 +44,8 @@
     <Compile Include="GraphventureGame\Map.cs" />
     <Compile Include="GraphventureGame\Screen.cs" />
     <Compile Include="GraphventureGame\Tile.cs" />
+    <Compile Include="GraphventureGame\Lost.cs" />
+    <Compile Include="GraphventureGame\Won.cs" />
     <Compile Include="GraphventureGame\Welcome.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

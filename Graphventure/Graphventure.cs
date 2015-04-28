@@ -10,13 +10,20 @@ namespace Graphventure {
     /// </summary>
     public class Graphventure : Game {
         private static Graphventure currentAdventure;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+
+        #region Screens
+
         private Screen currentScreen;
         private ScreenType currentScreenType;
         private Fight fight;
-        private GraphicsDeviceManager graphics;
+        private Lost lost;
         private Map map;
-        private SpriteBatch spriteBatch;
         private Welcome welcome;
+        private Won won;
+
+        #endregion Screens
 
         public Graphventure()
             : base() {
@@ -24,6 +31,7 @@ namespace Graphventure {
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 512;
             graphics.PreferredBackBufferWidth = 640;
+            graphics.IsFullScreen = true;
             currentAdventure = this;
         }
 
@@ -35,6 +43,14 @@ namespace Graphventure {
         }
 
         public void EndFight(bool won) {
+            if (won) {
+                currentScreenType = ScreenType.Won;
+            } else {
+                currentScreenType = ScreenType.Lost;
+            }
+        }
+
+        public void ShowMapAfterFight(bool won) {
             currentScreenType = ScreenType.Map;
             map.EndFight(won);
         }
@@ -48,9 +64,8 @@ namespace Graphventure {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.SandyBrown);
+            GraphicsDevice.Clear(Color.Wheat);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred);
             currentScreen.Draw(spriteBatch, gameTime);
             spriteBatch.End();
@@ -65,7 +80,6 @@ namespace Graphventure {
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize() {
-            // TODO: Add your initialization logic here
             currentScreenType = ScreenType.Welcome;
             base.Initialize();
         }
@@ -79,8 +93,11 @@ namespace Graphventure {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Fonts.LoadFonts(Content);
             map = Map.Parse("maps/demo.txt");
-            map.LoadContent(Content);
             welcome = new Welcome();
+            won = new Won();
+            lost = new Lost();
+
+            map.LoadContent(Content);
             currentScreen = welcome;
         }
 
@@ -115,6 +132,14 @@ namespace Graphventure {
 
                 case ScreenType.Fight:
                     currentScreen = fight;
+                    break;
+
+                case ScreenType.Won:
+                    currentScreen = won;
+                    break;
+
+                case ScreenType.Lost:
+                    currentScreen = lost;
                     break;
             }
         }

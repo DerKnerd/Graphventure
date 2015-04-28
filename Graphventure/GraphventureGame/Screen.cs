@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Graphventure.GraphventureGame {
 
     public enum ScreenType {
-        Map,
         Fight,
-        Welcome
+        Lost,
+        Map,
+        Welcome,
+        Won
     }
 
     public abstract class Screen {
