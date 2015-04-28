@@ -10,6 +10,11 @@ using Microsoft.Xna.Framework.Input;
 namespace Graphventure.GraphventureGame {
 
     public class Fight : Screen {
+        private static short FightingCount = 0;
+
+        public Fight() {
+            FightingCount++;
+        }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
         }

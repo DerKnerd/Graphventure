@@ -16,6 +16,7 @@ namespace Graphventure {
         private GraphicsDeviceManager graphics;
         private Map map;
         private SpriteBatch spriteBatch;
+        private Welcome welcome;
 
         public Graphventure()
             : base() {
@@ -36,6 +37,10 @@ namespace Graphventure {
         public void EndFight(bool won) {
             currentScreenType = ScreenType.Map;
             map.EndFight(won);
+        }
+
+        public void Start() {
+            currentScreenType = ScreenType.Map;
         }
 
         /// <summary>
@@ -61,7 +66,7 @@ namespace Graphventure {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-
+            currentScreenType = ScreenType.Welcome;
             base.Initialize();
         }
 
@@ -72,10 +77,11 @@ namespace Graphventure {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            // TODO: use this.Content to load your game content here
+            Fonts.LoadFonts(Content);
             map = Map.Parse("maps/demo.txt");
             map.LoadContent(Content);
-            currentScreen = map;
+            welcome = new Welcome();
+            currentScreen = welcome;
         }
 
         /// <summary>
@@ -94,6 +100,7 @@ namespace Graphventure {
             var keyboardState = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
+
             setScreen();
             currentScreen.Update(gameTime);
 

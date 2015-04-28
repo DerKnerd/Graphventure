@@ -71,3 +71,15 @@
 /processorParam:TextureFormat=Color
 /build:Tiles/wall.png
 
+#begin Fonts/Halo.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Halo.spritefont
+
+#begin Fonts/Welcome.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Welcome.spritefont
+

@@ -10,7 +10,8 @@ namespace Graphventure.GraphventureGame {
 
     public enum ScreenType {
         Map,
-        Fight
+        Fight,
+        Welcome
     }
 
     public abstract class Screen {
