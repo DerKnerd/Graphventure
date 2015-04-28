@@ -8,21 +8,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Graphventure.GraphventureGame {
 
+    public enum ScreenType {
+        Map,
+        Fight
+    }
+
     public abstract class Screen {
+
+        public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
+
+        public abstract void Initialize();
 
         public abstract void LoadContent(ContentManager contentmanager);
 
         public abstract void UnloadContent();
 
-        public abstract void Initialize();
-
         public abstract void Update(GameTime gameTime);
-
-        public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
-    }
-
-    internal enum ScreenType {
-        Map,
-        Fight
     }
 }

@@ -9,8 +9,10 @@ namespace Graphventure {
     /// This is the main type for your game
     /// </summary>
     public class Graphventure : Game {
+        private static Graphventure currentAdventure;
         private Screen currentScreen;
         private ScreenType currentScreenType;
+        private Fight fight;
         private GraphicsDeviceManager graphics;
         private Map map;
         private SpriteBatch spriteBatch;
@@ -21,6 +23,19 @@ namespace Graphventure {
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 512;
             graphics.PreferredBackBufferWidth = 640;
+            currentAdventure = this;
+        }
+
+        public static Graphventure CurrentAdventure { get { return currentAdventure; } }
+
+        public void BeginFight() {
+            currentScreenType = ScreenType.Fight;
+            fight = new Fight();
+        }
+
+        public void EndFight(bool won) {
+            currentScreenType = ScreenType.Map;
+            map.EndFight(won);
         }
 
         /// <summary>
@@ -28,7 +43,7 @@ namespace Graphventure {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.SandyBrown);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.Deferred);
@@ -92,6 +107,7 @@ namespace Graphventure {
                     break;
 
                 case ScreenType.Fight:
+                    currentScreen = fight;
                     break;
             }
         }

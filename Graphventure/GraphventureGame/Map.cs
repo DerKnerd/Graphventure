@@ -22,6 +22,7 @@ namespace Graphventure.GraphventureGame {
 
         private Texture2D grassTexture;
 
+        private Vector2 oldPosition;
         private KeyboardState oldState;
 
         private Texture2D playerTexture;
@@ -76,6 +77,14 @@ namespace Graphventure.GraphventureGame {
             drawPlayer();
         }
 
+        public void EndFight(bool won) {
+            if (won) {
+                MapData[(int)Position.Y][(int)Position.X] = ".";
+            } else {
+                Position = oldPosition;
+            }
+        }
+
         public override void Initialize() {
         }
 
@@ -115,10 +124,13 @@ namespace Graphventure.GraphventureGame {
                     }
                     break;
             }
-            var oldPosition = Position;
+            oldPosition = Position;
             Position += direction;
             if (MapData[(int)Position.Y][(int)Position.X] == "w") {
                 Position = oldPosition;
+            }
+            if (MapData[(int)Position.Y][(int)Position.X] == "e") {
+                Graphventure.CurrentAdventure.BeginFight();
             }
         }
 

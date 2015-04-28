@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Graphventure.cs" />
+    <Compile Include="GraphventureGame\Fight.cs" />
     <Compile Include="GraphventureGame\Map.cs" />
     <Compile Include="GraphventureGame\Screen.cs" />
     <Compile Include="GraphventureGame\Tile.cs" />
