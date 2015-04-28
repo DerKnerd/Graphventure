@@ -9,9 +9,11 @@ namespace Graphventure {
     /// This is the main type for your game
     /// </summary>
     public class Graphventure : Game {
+        private Screen currentScreen;
+        private ScreenType currentScreenType;
         private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
         private Map map;
+        private SpriteBatch spriteBatch;
 
         public Graphventure()
             : base() {
@@ -19,6 +21,21 @@ namespace Graphventure {
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 512;
             graphics.PreferredBackBufferWidth = 640;
+        }
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Draw(GameTime gameTime) {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Deferred);
+            currentScreen.Draw(spriteBatch, gameTime);
+            spriteBatch.End();
+
+            base.Draw(gameTime);
         }
 
         /// <summary>
@@ -43,6 +60,7 @@ namespace Graphventure {
             // TODO: use this.Content to load your game content here
             map = Map.Parse("maps/demo.txt");
             map.LoadContent(Content);
+            currentScreen = map;
         }
 
         /// <summary>
@@ -50,7 +68,6 @@ namespace Graphventure {
         /// all content.
         /// </summary>
         protected override void UnloadContent() {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -60,38 +77,23 @@ namespace Graphventure {
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
             var keyboardState = Keyboard.GetState();
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
+            setScreen();
+            currentScreen.Update(gameTime);
 
-            if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up)) {
-                map.Move(Direction.Up, gameTime);
-            } else if (keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down)) {
-                map.Move(Direction.Down, gameTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.A) || keyboardState.IsKeyDown(Keys.Left)) {
-                map.Move(Direction.Left, gameTime);
-            } else if (keyboardState.IsKeyDown(Keys.D) || keyboardState.IsKeyDown(Keys.Right)) {
-                map.Move(Direction.Right, gameTime);
-            }
-
-            // TODO: Add your update logic here
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+        private void setScreen() {
+            switch (currentScreenType) {
+                case ScreenType.Map:
+                    currentScreen = map;
+                    break;
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred);
-            map.DrawMap(spriteBatch, gameTime);
-            spriteBatch.End();
-
-            base.Draw(gameTime);
+                case ScreenType.Fight:
+                    break;
+            }
         }
     }
 }
