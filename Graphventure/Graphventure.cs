@@ -1,4 +1,5 @@
 ﻿using Graphventure.GraphventureGame;
+using Graphventure.GraphventureGame.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -31,7 +32,9 @@ namespace Graphventure {
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 512;
             graphics.PreferredBackBufferWidth = 640;
+#if !DEBUG
             graphics.IsFullScreen = true;
+#endif
             currentAdventure = this;
         }
 
@@ -39,7 +42,7 @@ namespace Graphventure {
 
         public void BeginFight() {
             currentScreenType = ScreenType.Fight;
-            fight = new Fight();
+            fight.StartFight();
         }
 
         public void EndFight(bool won) {
@@ -89,15 +92,15 @@ namespace Graphventure {
         /// all of your content.
         /// </summary>
         protected override void LoadContent() {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Fonts.LoadFonts(Content);
+            Sprites.LoadSprites(Content);
+            Tiles.LoadTiles(Content);
             map = Map.Parse("maps/demo.txt");
             welcome = new Welcome();
             won = new Won();
             lost = new Lost();
-
-            map.LoadContent(Content);
+            fight = new Fight();
             currentScreen = welcome;
         }
 

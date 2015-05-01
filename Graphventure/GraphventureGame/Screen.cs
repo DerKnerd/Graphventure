@@ -18,10 +18,6 @@ namespace Graphventure.GraphventureGame {
 
         public abstract void Initialize();
 
-        public abstract void LoadContent(ContentManager contentmanager);
-
-        public abstract void UnloadContent();
-
         public abstract void Update(GameTime gameTime);
     }
 }

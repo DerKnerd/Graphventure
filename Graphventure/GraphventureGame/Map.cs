@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Graphventure.GraphventureGame.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,16 +19,10 @@ namespace Graphventure.GraphventureGame {
     public class Map : Screen {
         private readonly Vector2 Speed = new Vector2(40, 32);
 
-        private Texture2D enemyTexture;
-
-        private Texture2D grassTexture;
-
+        private Direction direction = Direction.Down;
         private Vector2 oldPosition;
         private KeyboardState oldState;
-
-        private Texture2D playerTexture;
-
-        private Texture2D wallTexture;
+        private byte walkingIndex = 0;
 
         private Map() {
             Position = new Vector2(0, 0);
@@ -62,19 +57,19 @@ namespace Graphventure.GraphventureGame {
             for (int y = 0; y < MapData.Count(); y++) {
                 var current = MapData[y];
                 for (int x = 0; x < current.Count(); x++) {
-                    drawTile(x, y);
+                    Tiles.Grass.Draw(spriteBatch, x, y);
                     switch (current[x]) {
                         case "e":
-                            drawEnemy(x, y);
+                            Sprites.EnemyWalking.Draw(spriteBatch, new Vector2(x, y) * Speed);
                             break;
 
                         case "w":
-                            drawWall(x, y);
+                            Tiles.Wall.Draw(spriteBatch, x, y);
                             break;
                     }
                 }
             }
-            drawPlayer();
+            Sprites.PlayerWalking[direction].Draw(spriteBatch, Position * Speed);
         }
 
         public void EndFight(bool won) {
@@ -86,13 +81,6 @@ namespace Graphventure.GraphventureGame {
         }
 
         public override void Initialize() {
-        }
-
-        public override void LoadContent(ContentManager content) {
-            playerTexture = content.Load<Texture2D>("Sprites/player");
-            enemyTexture = content.Load<Texture2D>("Sprites/enemy");
-            grassTexture = content.Load<Texture2D>("Tiles/grass");
-            wallTexture = content.Load<Texture2D>("Tiles/wall");
         }
 
         public void Move(Direction pdirection) {
@@ -134,11 +122,9 @@ namespace Graphventure.GraphventureGame {
             }
         }
 
-        public override void UnloadContent() {
-        }
-
         public override void Update(GameTime gameTime) {
             updateInput(Keyboard.GetState());
+            Sprites.PlayerWalking[direction].UpdateFrame((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         private bool checkKey(KeyboardState keyboardState, Keys key) {
@@ -150,42 +136,23 @@ namespace Graphventure.GraphventureGame {
             return false;
         }
 
-        private void drawEnemy(int x, int y) {
-            drawTexture(enemyTexture, x, y);
-        }
-
-        private void drawPlayer() {
-            drawTile((int)Position.X, (int)Position.Y);
-            var p = Position * new Vector2(40, 32);
-            this.SpriteBatch.Draw(playerTexture, p, Color.White);
-        }
-
-        private void drawTexture(Texture2D texture, int x, int y) {
-            var rectangle = new Rectangle(x * 40, y * 32, 40, 32);
-            this.SpriteBatch.Draw(texture, rectangle, Color.White);
-        }
-
-        private void drawTile(int x, int y) {
-            drawTexture(grassTexture, x, y);
-        }
-
-        private void drawWall(int x, int y) {
-            drawTexture(wallTexture, x, y);
-        }
-
         private void updateInput(KeyboardState keyboardState) {
             if (checkKey(keyboardState, Keys.Up)) {
-                Move(Direction.Up);
+                direction = Direction.Up;
+                Move(direction);
             }
             if (checkKey(keyboardState, Keys.Down)) {
-                Move(Direction.Down);
+                direction = Direction.Down;
+                Move(direction);
             }
 
             if (checkKey(keyboardState, Keys.Left)) {
-                Move(Direction.Left);
+                direction = Direction.Left;
+                Move(direction);
             }
             if (checkKey(keyboardState, Keys.Right)) {
-                Move(Direction.Right);
+                direction = Direction.Right;
+                Move(direction);
             }
 
             oldState = keyboardState;

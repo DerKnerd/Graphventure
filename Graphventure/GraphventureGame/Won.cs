@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Graphventure.GraphventureGame.Content;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -27,12 +27,6 @@ namespace Graphventure.GraphventureGame {
         }
 
         public override void Initialize() {
-        }
-
-        public override void LoadContent(ContentManager contentmanager) {
-        }
-
-        public override void UnloadContent() {
         }
 
         public override void Update(GameTime gameTime) {

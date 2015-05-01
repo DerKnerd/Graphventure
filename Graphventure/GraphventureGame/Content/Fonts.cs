@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Graphventure.GraphventureGame {
+namespace Graphventure.GraphventureGame.Content {
 
     public static class Fonts {
 

@@ -39,8 +39,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Graphventure.cs" />
+    <Compile Include="GraphventureGame\Content\Animatable.cs" />
+    <Compile Include="GraphventureGame\Content\Drawable.cs" />
+    <Compile Include="GraphventureGame\Content\Sprites.cs" />
+    <Compile Include="GraphventureGame\Content\Tiles.cs" />
     <Compile Include="GraphventureGame\Fight.cs" />
-    <Compile Include="GraphventureGame\Fonts.cs" />
+    <Compile Include="GraphventureGame\Content\Fonts.cs" />
     <Compile Include="GraphventureGame\Map.cs" />
     <Compile Include="GraphventureGame\Screen.cs" />
     <Compile Include="GraphventureGame\Tile.cs" />
@@ -51,8 +55,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.3.0.0\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -62,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
