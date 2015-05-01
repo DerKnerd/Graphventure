@@ -12,7 +12,7 @@ namespace Graphventure.GraphventureGame {
         private byte playerHealth = 100;
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-            Sprites.EnemyFighting.Draw(spriteBatch, new Vector2(16, 16));
+            Sprites.EnemyFighting.Draw(spriteBatch, new Vector2(16, 25));
             Sprites.PlayerFighting.Draw(spriteBatch, new Vector2(360, 232));
         }
 
